@@ -5,9 +5,9 @@ import type { ModelAsset } from '@shared/types'
 import { formatBytes, formatDimsCompact } from '@renderer/lib/format'
 
 const EXT_TONE: Record<string, string> = {
-  stl: 'text-[#93B8F0]',
-  obj: 'text-[#B4A5E8]',
-  '3mf': 'text-[#B8C6FF]'
+  stl: 'text-ext-stl',
+  obj: 'text-ext-obj',
+  '3mf': 'text-ext-mf'
 }
 
 function Thumb({ model, compact }: { model: ModelAsset; compact?: boolean }): ReactElement {
@@ -81,11 +81,11 @@ export function AssetCard({
           'transition-colors duration-150',
           selected
             ? 'border-accent/40 bg-accent/[0.055]'
-            : 'border-transparent hover:border-white/[0.1] hover:bg-white/[0.025]'
+            : 'border-transparent hover:border-overlay/[0.1] hover:bg-overlay/[0.025]'
         )}
       >
         {selected ? <span className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-r bg-accent" /> : null}
-        <div className="relative h-[42px] w-[52px] shrink-0 overflow-hidden rounded-[5px] border border-white/[0.04] bg-base-800">
+        <div className="relative h-[42px] w-[52px] shrink-0 overflow-hidden rounded-[5px] border border-overlay/[0.04] bg-base-800">
           <Thumb model={model} compact />
         </div>
         <div className="min-w-0 flex-1">
@@ -121,8 +121,8 @@ export function AssetCard({
         selected
           ? 'border-accent/55 bg-accent/[0.05] shadow-focus'
           : focused
-            ? 'border-white/[0.16] bg-base-700'
-            : 'border-white/[0.055] hover:border-white/[0.14] hover:bg-base-700',
+            ? 'border-overlay/[0.16] bg-base-700'
+            : 'border-overlay/[0.055] hover:border-overlay/[0.14] hover:bg-base-700',
         'card-shadow'
       )}
     >
@@ -179,7 +179,7 @@ export function AssetCard({
       </div>
 
       {/* 信息条：名称优先，元数据降级为一行等宽数字 */}
-      <div className="flex shrink-0 flex-col justify-center gap-[3px] border-t border-white/[0.05] px-2.5 py-2">
+      <div className="flex shrink-0 flex-col justify-center gap-[3px] border-t border-overlay/[0.05] px-2.5 py-2">
         <p className="truncate text-xs font-medium leading-[16px] tracking-[-0.005em] text-ink-100" title={model.filename}>
           {model.filename}
         </p>

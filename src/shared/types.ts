@@ -165,6 +165,8 @@ export interface AppSettings {
   externalApps: { label: string; path: string }[]
   gridDensity: 'compact' | 'cozy' | 'roomy'
   background: 'dark' | 'light' | 'transparent'
+  /** 界面主题：浅色 / 深色 / 跟随系统 */
+  theme: 'dark' | 'light' | 'system'
 }
 
 export interface UpdatePatch {

@@ -95,7 +95,7 @@ export function NewLibraryDialog(): ReactElement | null {
           <div>
             <span className="mb-1.5 block text-[11px] font-medium text-ink-300">文件夹</span>
             <div className="flex items-center gap-2">
-              <div className="min-w-0 flex-1 truncate rounded-md border border-white/[0.08] bg-base-900 px-2.5 py-2 text-[11.5px] text-ink-300">
+              <div className="min-w-0 flex-1 truncate rounded-md border border-overlay/[0.08] bg-base-900 px-2.5 py-2 text-[11.5px] text-ink-300">
                 {path || <span className="text-ink-500">尚未选择</span>}
               </div>
               <Button variant="ghost" onClick={() => void chooseFolder()} className="shrink-0">

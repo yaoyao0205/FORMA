@@ -90,7 +90,7 @@ function Section({
   children: ReactElement | ReactElement[]
 }): ReactElement {
   return (
-    <div className="border-t border-white/[0.055] px-3.5 py-3">
+    <div className="border-t border-overlay/[0.055] px-3.5 py-3">
       <div className="mb-2 flex h-5 items-center justify-between">
         <h3 className="text-[10px] font-medium uppercase tracking-[0.18em] text-ink-500">{title}</h3>
         {action}
@@ -155,12 +155,12 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
   if (!model) {
     const count = selected.size
     return (
-      <aside className="flex w-[320px] shrink-0 flex-col border-l border-white/[0.055] bg-base-850">
+      <aside className="flex w-[320px] shrink-0 flex-col border-l border-overlay/[0.055] bg-base-850">
         <div className="drag-region flex h-14 shrink-0 items-center justify-end px-3">
           <IconButton icon={<X size={13} />} label="收起检查器 (⌘I)" onClick={onClose} />
         </div>
         <div className="flex flex-1 flex-col items-center justify-center gap-2.5 px-8 text-center">
-          <div className="grid h-12 w-12 place-items-center rounded-full border border-white/[0.06] text-ink-600">
+          <div className="grid h-12 w-12 place-items-center rounded-full border border-overlay/[0.06] text-ink-600">
             <Box size={18} />
           </div>
           <p className="text-xs text-ink-300">{count > 0 ? `已选择 ${count} 个模型` : '未选择模型'}</p>
@@ -177,13 +177,13 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
   const unitLabel = model.unit === 'inch' ? 'in' : model.unit
 
   return (
-    <aside className="flex w-[320px] shrink-0 flex-col border-l border-white/[0.055] bg-base-850">
+    <aside className="flex w-[320px] shrink-0 flex-col border-l border-overlay/[0.055] bg-base-850">
       <div className="drag-region flex h-14 shrink-0 items-center gap-2 px-3">
         <div className="flex min-w-0 flex-1 items-center gap-1.5">
           <span className="truncate text-xs font-medium text-ink-100" title={model.filename}>
             {model.filename.replace(/\.[^.]+$/, '')}
           </span>
-          <span className="shrink-0 rounded-[3px] bg-white/[0.05] px-1 py-[1px] text-[9.5px] font-semibold uppercase tracking-wide text-ink-400">
+          <span className="shrink-0 rounded-[3px] bg-overlay/[0.05] px-1 py-[1px] text-[9.5px] font-semibold uppercase tracking-wide text-ink-400">
             {model.ext}
           </span>
         </div>
@@ -201,7 +201,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
       <div className="flex-1 overflow-y-auto">
         {/* 3D 预览：大尺寸优先，模型本身是主角 */}
         <div className="px-3 pb-2.5">
-          <div className="overflow-hidden rounded-panel border border-white/[0.06]">
+          <div className="overflow-hidden rounded-panel border border-overlay/[0.06]">
             <ModelViewer
               model={model}
               payload={geo.payload}
@@ -222,14 +222,14 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
             <button
               type="button"
               onClick={() => void openModel(model.id)}
-              className="no-drag inline-flex h-7 flex-1 items-center justify-center gap-1.5 rounded-md bg-white/[0.045] text-[11px] text-ink-300 transition-colors hover:bg-white/[0.08] hover:text-ink-100"
+              className="no-drag inline-flex h-7 flex-1 items-center justify-center gap-1.5 rounded-md bg-overlay/[0.045] text-[11px] text-ink-300 transition-colors hover:bg-overlay/[0.08] hover:text-ink-100"
             >
               <ExternalLink size={12} /> 外部打开
             </button>
             <button
               type="button"
               onClick={() => void revealModel(model.id)}
-              className="no-drag inline-flex h-7 flex-1 items-center justify-center gap-1.5 rounded-md bg-white/[0.045] text-[11px] text-ink-300 transition-colors hover:bg-white/[0.08] hover:text-ink-100"
+              className="no-drag inline-flex h-7 flex-1 items-center justify-center gap-1.5 rounded-md bg-overlay/[0.045] text-[11px] text-ink-300 transition-colors hover:bg-overlay/[0.08] hover:text-ink-100"
             >
               <FolderOpen size={12} /> 访达
             </button>
@@ -250,7 +250,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
             <select
               value={model.unit}
               onChange={(e) => void updateModel(model.id, { unit: e.target.value as Unit })}
-              className="no-drag h-[20px] rounded border border-white/[0.08] bg-base-800 px-1 text-[10px] text-ink-300 outline-none"
+              className="no-drag h-[20px] rounded border border-overlay/[0.08] bg-base-800 px-1 text-[10px] text-ink-300 outline-none"
               title="模型单位（STL 没有可靠单位信息，可手动指定）"
             >
               <option value="mm">毫米</option>
@@ -274,7 +274,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
             />
             <Row label="封闭性" value={model.closed === null ? '未检测' : model.closed ? '封闭' : '非封闭'} />
             {!model.unitDeclared ? (
-              <p className="mt-2 rounded bg-white/[0.03] px-2 py-1.5 text-[9.5px] leading-relaxed text-ink-500">
+              <p className="mt-2 rounded bg-overlay/[0.03] px-2 py-1.5 text-[9.5px] leading-relaxed text-ink-500">
                 {model.ext === 'stl' || model.ext === 'obj'
                   ? `${model.ext.toUpperCase()} 不携带单位信息，当前按 ${unitLabel} 显示。可在右上角切换。`
                   : '该文件未声明单位，已按毫米估算。'}
@@ -290,7 +290,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
             <Row label="导入时间" value={formatDate(model.importedAt)} mono />
             <Row label="存储模式" value={model.mode === 'managed' ? '托管（库内副本）' : '引用（原始位置）'} />
             <Row label="SHA-256" value={model.sha256 ? `${model.sha256.slice(0, 10)}…` : '—'} mono />
-            <div className="mt-2 rounded bg-white/[0.03] px-2 py-1.5">
+            <div className="mt-2 rounded bg-overlay/[0.03] px-2 py-1.5">
               <p className="selectable break-all text-[9.5px] leading-relaxed text-ink-500">{model.path}</p>
             </div>
           </>
@@ -342,7 +342,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
                       key={t.id}
                       type="button"
                       onClick={() => void attachTag(t.id, [model.id])}
-                      className="no-drag rounded px-1.5 py-[2px] text-[10px] text-ink-400 transition-colors hover:bg-white/[0.06] hover:text-ink-200"
+                      className="no-drag rounded px-1.5 py-[2px] text-[10px] text-ink-400 transition-colors hover:bg-overlay/[0.06] hover:text-ink-200"
                     >
                       + {t.name}
                     </button>
@@ -367,7 +367,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
                       'no-drag rounded-[4px] px-1.5 py-[2px] text-[10px] transition-colors',
                       active
                         ? 'bg-accent/12 text-accent'
-                        : 'text-ink-400 hover:bg-white/[0.06] hover:text-ink-200'
+                        : 'text-ink-400 hover:bg-overlay/[0.06] hover:text-ink-200'
                     )}
                   >
                     {p.name}
@@ -393,7 +393,7 @@ export function Inspector({ onClose }: { onClose: () => void }): ReactElement {
                     'no-drag rounded border px-1 py-[3px] text-[10px] transition-colors',
                     model.printStatus === st
                       ? 'border-accent/40 bg-accent/10 text-accent'
-                      : 'border-white/[0.07] text-ink-400 hover:border-white/[0.16] hover:text-ink-200'
+                      : 'border-overlay/[0.07] text-ink-400 hover:border-overlay/[0.16] hover:text-ink-200'
                   )}
                 >
                   {printLabel(st)}

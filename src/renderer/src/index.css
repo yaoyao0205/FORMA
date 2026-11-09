@@ -2,15 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   主题令牌
+   深色为默认（Graphite Studio）。浅色只覆盖这组变量，
+   组件里不使用 dark: 前缀，避免两套样式各自漂移。
+   变量一律写成 "R G B" 三元组，供 Tailwind 的 rgb(var(--x) / a) 使用。
+   ------------------------------------------------------------------ */
 @layer base {
-  :root {
+  :root,
+  [data-theme='dark'] {
     color-scheme: dark;
-    /* 供 3D 视口与自定义绘制读取的中性色 */
-    --studio-bg: #141619;
-    --studio-panel: #1b1e22;
-    --studio-card: #25292e;
-    --studio-border: #343940;
-    --studio-accent: #b8c6ff;
+
+    --c-base-950: 20 22 25;   /* #141619 App bg */
+    --c-base-900: 23 26 29;   /* #171A1D 画布 */
+    --c-base-850: 27 30 34;   /* #1B1E22 Sidebar / 输入框 */
+    --c-base-800: 32 36 42;   /* #20242A 抬起层 */
+    --c-base-750: 37 41 46;   /* #25292E Card */
+    --c-base-700: 42 47 53;   /* #2A2F35 hover */
+    --c-base-650: 48 53 60;   /* #30353C 分段控件 */
+    --c-base-600: 52 57 64;   /* #343940 Border */
+
+    --c-ink-100: 243 244 246;
+    --c-ink-200: 223 227 233;
+    --c-ink-300: 191 197 206;
+    --c-ink-400: 156 163 175;
+    --c-ink-500: 110 118 129;
+    --c-ink-600: 74 81 88;
+
+    --c-accent: 184 198 255;
+    --c-accent-soft: 142 158 232;
+    --c-accent-dim: 60 70 102;
+
+    --c-ok: 143 214 168;
+    --c-warn: 230 192 121;
+    --c-danger: 229 133 128;
+    --c-info: 147 184 240;
+
+    --c-ext-stl: 147 184 240;
+    --c-ext-obj: 180 165 232;
+    --c-ext-3mf: 184 198 255;
+
+    --c-overlay: 255 255 255;
+    --c-line: 255 255 255;
+    --a-line: 0.055;
+    --a-line-strong: 0.12;
+
+    --c-card-inset: rgba(255, 255, 255, 0.03);
+    --c-card-shadow: rgba(0, 0, 0, 0.6);
+    --c-pop-shadow: rgba(0, 0, 0, 0.85);
+    --c-pop-ring: rgba(255, 255, 255, 0.06);
+
+    /* 3D 视口与缩略图舞台：两套主题下都保持石墨深底，
+       让白模有稳定的对比背景（浅色外壳 + 深色舞台是常见专业做法） */
+    --studio-viewport-bg: #141619;
+    --studio-thumb-glow: rgba(255, 255, 255, 0.06);
+    --studio-thumb-fade: rgba(20, 22, 25, 0.0);
+    --studio-scrollbar: rgba(255, 255, 255, 0.09);
+    --studio-scrollbar-hover: rgba(255, 255, 255, 0.2);
+    --studio-selection: rgba(184, 198, 255, 0.28);
+    --studio-selection-text: #ffffff;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+
+    --c-base-950: 243 245 248; /* App bg */
+    --c-base-900: 236 239 244; /* 画布：比卡片暗一档，白卡才有浮起感 */
+    --c-base-850: 255 255 255; /* Sidebar / 输入框 */
+    --c-base-800: 250 251 253;
+    --c-base-750: 255 255 255; /* Card */
+    --c-base-700: 240 242 245; /* hover */
+    --c-base-650: 233 235 239;
+    --c-base-600: 220 224 230; /* Border */
+
+    --c-ink-100: 22 24 27;
+    --c-ink-200: 44 48 55;
+    --c-ink-300: 69 75 84;
+    --c-ink-400: 107 114 128;
+    --c-ink-500: 154 161 172;
+    --c-ink-600: 198 203 211;
+
+    /* 浅底上强调色必须压深，否则 accent 按钮上的近白文字读不出来 */
+    --c-accent: 64 84 200; /* #4054C8 */
+    --c-accent-soft: 94 112 220;
+    --c-accent-dim: 221 227 251;
+
+    --c-ok: 46 139 87;
+    --c-warn: 185 131 36;
+    --c-danger: 196 67 60;
+    --c-info: 46 109 180;
+
+    --c-ext-stl: 40 100 190;
+    --c-ext-obj: 96 74 176;
+    --c-ext-3mf: 64 84 200;
+
+    --c-overlay: 15 23 42;
+    --c-line: 15 23 42;
+    --a-line: 0.07;
+    --a-line-strong: 0.14;
+
+    --c-card-inset: rgba(255, 255, 255, 0.9);
+    --c-card-shadow: rgba(16, 24, 40, 0.07);
+    --c-pop-shadow: rgba(16, 24, 40, 0.18);
+    --c-pop-ring: rgba(16, 24, 40, 0.06);
+
+    --studio-viewport-bg: #141619;
+    --studio-thumb-glow: rgba(255, 255, 255, 0.07);
+    --studio-thumb-fade: rgba(20, 22, 25, 0);
+    --studio-scrollbar: rgba(16, 24, 40, 0.14);
+    --studio-scrollbar-hover: rgba(16, 24, 40, 0.28);
+    --studio-selection: rgba(64, 84, 200, 0.18);
+    --studio-selection-text: #16181b;
   }
 
   html,
@@ -29,6 +131,7 @@
     font-feature-settings: 'cv11', 'ss01';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition: background-color 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   * {
@@ -48,7 +151,7 @@
   /* 焦点只给键盘用户，鼠标点击不出现丑陋的蓝框 */
   :focus-visible {
     outline: none;
-    box-shadow: 0 0 0 1px rgba(184, 198, 255, 0.45), 0 0 0 4px rgba(184, 198, 255, 0.08);
+    box-shadow: 0 0 0 1px rgb(var(--c-accent) / 0.45), 0 0 0 4px rgb(var(--c-accent) / 0.1);
     border-radius: 6px;
   }
 
@@ -60,19 +163,19 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.07);
+    background: var(--studio-scrollbar);
     border-radius: 999px;
     border: 3px solid transparent;
     background-clip: padding-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.16);
+    background: var(--studio-scrollbar-hover);
     background-clip: padding-box;
   }
 
   ::selection {
-    background: rgba(184, 198, 255, 0.25);
-    color: #fff;
+    background: var(--studio-selection);
+    color: var(--studio-selection-text);
   }
 }
 
@@ -87,14 +190,20 @@
     text-wrap: balance;
   }
   .hairline {
-    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.055);
+    box-shadow: inset 0 -1px 0 rgb(var(--c-line) / var(--a-line));
   }
   .card-shadow {
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 2px 6px -2px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 1px 0 var(--c-card-inset) inset, 0 2px 6px -2px var(--c-card-shadow);
   }
-  /* 网格缩略图底：轻微径向光，让浅色模型不糊在黑底里 */
+  /* 网格缩略图底：轻微径向光，让白模有层次。
+     两套主题都保留石墨底，避免浅色外壳里出现突兀的暗块对比 */
   .thumb-stage {
-    background-image: radial-gradient(120% 90% at 50% 18%, rgba(255, 255, 255, 0.055), transparent 62%);
+    background-color: var(--studio-viewport-bg);
+    background-image: radial-gradient(
+      120% 90% at 50% 18%,
+      var(--studio-thumb-glow),
+      var(--studio-thumb-fade) 62%
+    );
   }
   .tabular {
     font-variant-numeric: tabular-nums;
@@ -102,5 +211,11 @@
   }
   .studio-ease {
     transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  /* 主题切换时让底色/边框平滑过渡，但不影响布局 */
+  .theme-transition {
+    transition: background-color 160ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      border-color 160ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      color 160ms cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 }

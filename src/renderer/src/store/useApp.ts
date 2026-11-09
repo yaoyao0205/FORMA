@@ -114,6 +114,8 @@ interface AppState {
   dismissToast: (id: number) => void
   createLibrary: (name: string, path: string, mode: 'reference' | 'managed') => Promise<Library | null>
   setLibraryWatch: (id: string, watch: boolean) => Promise<void>
+  /** 切换界面主题（深色 / 浅色 / 跟随系统），持久化到 app_settings */
+  setTheme: (theme: AppSettings['theme']) => Promise<void>
   pickFolder: (title?: string) => Promise<string | null>
 }
 
@@ -124,7 +126,8 @@ const DEFAULT_SETTINGS: AppSettings = {
   defaultUnit: 'mm',
   externalApps: [],
   gridDensity: 'cozy',
-  background: 'dark'
+  background: 'dark',
+  theme: 'dark'
 }
 
 let searchTimer: number | undefined
@@ -591,6 +594,15 @@ export const useApp = create<AppState>((set, get) => ({
       const libraries = await forma.libraries.list()
       set({ libraries })
       get().pushToast(watch ? '已开启文件夹监控：新增或更新的模型会自动入库' : '已关闭文件夹监控', 'success')
+    } catch (error) {
+      get().pushToast(errorMessage(error), 'error')
+    }
+  },
+
+  setTheme: async (theme) => {
+    try {
+      const settings = await forma.settings.set({ theme })
+      set({ settings })
     } catch (error) {
       get().pushToast(errorMessage(error), 'error')
     }

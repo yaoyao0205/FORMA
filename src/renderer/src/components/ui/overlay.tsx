@@ -65,7 +65,7 @@ export function DropdownContent({
         align={align}
         sideOffset={6}
         className={cn(
-          'z-50 min-w-[180px] overflow-hidden rounded-lg border border-white/[0.09] bg-base-800/95 p-1',
+          'z-50 min-w-[180px] overflow-hidden rounded-lg border border-overlay/[0.09] bg-base-800/95 p-1',
           'shadow-[0_16px_48px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl',
           className
         )}
@@ -93,7 +93,7 @@ export function DropdownItem({
       onSelect={onSelect}
       className={cn(
         'flex cursor-default select-none items-center gap-2 rounded-md px-2 py-[6px] text-[12px] outline-none',
-        'text-ink-200 data-[highlighted]:bg-white/[0.07] data-[highlighted]:text-ink-100',
+        'text-ink-200 data-[highlighted]:bg-overlay/[0.07] data-[highlighted]:text-ink-100',
         danger && 'text-danger/90 data-[highlighted]:bg-danger/10 data-[highlighted]:text-danger',
         disabled && 'opacity-40'
       )}
@@ -104,7 +104,7 @@ export function DropdownItem({
 }
 
 export function DropdownSeparator(): React.JSX.Element {
-  return <DropdownMenuPrimitive.Separator className="my-1 h-px bg-white/[0.06]" />
+  return <DropdownMenuPrimitive.Separator className="my-1 h-px bg-overlay/[0.06]" />
 }
 
 export function DropdownLabel({ children }: { children: React.ReactNode }): React.JSX.Element {
@@ -125,7 +125,7 @@ export function ContextMenuContent({ children }: { children: React.ReactNode }):
     <ContextMenuPrimitive.Portal>
       <ContextMenuPrimitive.Content
         className={cn(
-          'z-50 min-w-[200px] overflow-hidden rounded-lg border border-white/[0.09] bg-base-800/95 p-1',
+          'z-50 min-w-[200px] overflow-hidden rounded-lg border border-overlay/[0.09] bg-base-800/95 p-1',
           'shadow-[0_16px_48px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl'
         )}
       >
@@ -152,7 +152,7 @@ export function ContextMenuItem({
       onSelect={onSelect}
       className={cn(
         'flex cursor-default select-none items-center gap-2 rounded-md px-2 py-[6px] text-[12px] outline-none',
-        'text-ink-200 data-[highlighted]:bg-white/[0.07] data-[highlighted]:text-ink-100',
+        'text-ink-200 data-[highlighted]:bg-overlay/[0.07] data-[highlighted]:text-ink-100',
         danger && 'text-danger/90 data-[highlighted]:bg-danger/10 data-[highlighted]:text-danger',
         disabled && 'opacity-40'
       )}
@@ -163,7 +163,7 @@ export function ContextMenuItem({
 }
 
 export function ContextMenuSeparator(): React.JSX.Element {
-  return <ContextMenuPrimitive.Separator className="my-1 h-px bg-white/[0.06]" />
+  return <ContextMenuPrimitive.Separator className="my-1 h-px bg-overlay/[0.06]" />
 }
 
 export const ContextMenuLabel = ContextMenuPrimitive.Label

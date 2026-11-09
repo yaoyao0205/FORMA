@@ -446,6 +446,9 @@ export function registerIpc(getWindow: () => BrowserWindow | null, importService
     if (o.background !== undefined) {
       patch.background = oneOf(o.background, ['dark', 'light', 'transparent'] as const, 'background')
     }
+    if (o.theme !== undefined) {
+      patch.theme = oneOf(o.theme, ['dark', 'light', 'system'] as const, 'theme')
+    }
     if (o.externalApps !== undefined && Array.isArray(o.externalApps)) {
       patch.externalApps = o.externalApps.map((item) => {
         const appItem = asObject(item, 'externalApps')

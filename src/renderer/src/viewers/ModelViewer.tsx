@@ -174,7 +174,7 @@ export function ModelViewer({ model, payload, loading, error, className, compact
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-lg border border-white/[0.07]',
+        'relative overflow-hidden rounded-lg border border-overlay/[0.07]',
         fullscreen && 'fixed inset-0 z-40 rounded-none border-0',
         className
       )}

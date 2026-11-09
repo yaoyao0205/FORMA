@@ -116,12 +116,12 @@ export function Toolbar({
 
   return (
     <header className="shrink-0">
-      <div className="drag-region flex h-14 items-center gap-2 border-b border-white/[0.055] bg-base-900 px-3">
+      <div className="drag-region flex h-14 items-center gap-2 border-b border-overlay/[0.055] bg-base-900 px-3">
         <Tooltip content={sidebarCollapsed ? '展开导航栏 (⌘B)' : '收起导航栏 (⌘B)'}>
           <button
             type="button"
             onClick={onToggleSidebar}
-            className="no-drag grid h-7 w-7 shrink-0 place-items-center rounded-md text-ink-500 transition-colors hover:bg-white/[0.06] hover:text-ink-100"
+            className="no-drag grid h-7 w-7 shrink-0 place-items-center rounded-md text-ink-500 transition-colors hover:bg-overlay/[0.06] hover:text-ink-100"
           >
             {sidebarCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
           </button>
@@ -131,7 +131,7 @@ export function Toolbar({
           <h1 className="truncate text-[14px] font-semibold tracking-[-0.01em] text-ink-100">
             {viewTitle(sidebar, tags, projects)}
           </h1>
-          <span className="shrink-0 rounded-full bg-white/[0.05] px-1.5 py-[1px] tabular text-[10.5px] text-ink-400">
+          <span className="shrink-0 rounded-full bg-overlay/[0.05] px-1.5 py-[1px] tabular text-[10.5px] text-ink-400">
             {loading ? '…' : total}
           </span>
         </div>
@@ -154,7 +154,7 @@ export function Toolbar({
               <X size={12} />
             </button>
           ) : (
-            <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-white/[0.08] bg-white/[0.03] px-1 py-[1px] text-[10px] text-ink-500">
+            <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-overlay/[0.08] bg-overlay/[0.03] px-1 py-[1px] text-[10px] text-ink-500">
               ⌘F
             </kbd>
           )}
@@ -275,14 +275,14 @@ export function Toolbar({
               onClick={onToggleInspector}
               className={cn(
                 'no-drag grid h-7 w-7 place-items-center rounded-md transition-colors',
-                inspectorOpen ? 'text-accent bg-white/[0.06]' : 'text-ink-500 hover:bg-white/[0.06] hover:text-ink-100'
+                inspectorOpen ? 'text-accent bg-overlay/[0.06]' : 'text-ink-500 hover:bg-overlay/[0.06] hover:text-ink-100'
               )}
             >
               <SlidersHorizontal size={14} />
             </button>
           </Tooltip>
 
-          <div className="mx-1 h-4 w-px bg-white/[0.08]" />
+          <div className="mx-1 h-4 w-px bg-overlay/[0.08]" />
 
           <IconButton
             icon={scan?.active ? <Loader2 size={14} className="animate-spin text-accent" /> : <RefreshCw size={14} />}
@@ -304,7 +304,7 @@ export function Toolbar({
       </div>
 
       {activeFilterCount > 0 ? (
-        <div className="flex h-8 items-center gap-1.5 overflow-x-auto border-b border-white/[0.045] bg-base-900/60 px-3 no-drag">
+        <div className="flex h-8 items-center gap-1.5 overflow-x-auto border-b border-overlay/[0.045] bg-base-900/60 px-3 no-drag">
           <span className="shrink-0 text-[10px] uppercase tracking-[0.14em] text-ink-500">筛选</span>
           {search ? (
             <FilterChip label={`“${search}”`} onClick={() => setSearch('')} />
@@ -352,7 +352,7 @@ function FilterChip({
     <button
       type="button"
       onClick={onClick}
-      className="group inline-flex shrink-0 items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.03] px-2 py-[2px] text-[10.5px] text-ink-300 transition-colors hover:border-white/20 hover:text-ink-100"
+      className="group inline-flex shrink-0 items-center gap-1 rounded-full border border-overlay/[0.08] bg-overlay/[0.03] px-2 py-[2px] text-[10.5px] text-ink-300 transition-colors hover:border-white/20 hover:text-ink-100"
     >
       {dot ? <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: dot }} /> : null}
       <span className="max-w-[160px] truncate">{label}</span>

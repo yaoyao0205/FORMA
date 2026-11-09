@@ -14,7 +14,10 @@ import {
   HardDrive,
   Layers,
   Plus,
+  Monitor,
+  Moon,
   Settings2,
+  Sun,
   Star,
   Upload
 } from 'lucide-react'
@@ -48,8 +51,8 @@ function NavItem({
         'no-drag group relative flex w-full items-center rounded-md text-left transition-colors duration-150',
         collapsed ? 'h-8 justify-center' : 'h-7 gap-2.5 px-2',
         active
-          ? 'bg-white/[0.06] text-ink-100'
-          : 'text-ink-300 hover:bg-white/[0.035] hover:text-ink-100'
+          ? 'bg-overlay/[0.06] text-ink-100'
+          : 'text-ink-300 hover:bg-overlay/[0.035] hover:text-ink-100'
       )}
     >
       {active ? (
@@ -87,6 +90,8 @@ export function Sidebar({
   collapsed: boolean
   onToggleCollapse: () => void
 }): ReactElement {
+  const theme = useApp((s) => s.settings.theme)
+  const setTheme = useApp((s) => s.setTheme)
   const libraries = useApp((s) => s.libraries)
   const activeLibraryId = useApp((s) => s.activeLibraryId)
   const sidebar = useApp((s) => s.sidebar)
@@ -114,10 +119,22 @@ export function Sidebar({
     { key: 'duplicates', icon: <Copy size={14} />, label: '重复项' }
   ]
 
+  /** 外观三态循环：深色 → 浅色 → 跟随系统（⌘⇧L 同效） */
+  const cycleTheme = (): void => {
+    const next = theme === 'dark' ? 'light' : theme === 'light' ? 'system' : 'dark'
+    void setTheme(next)
+  }
+  const themeIcon =
+    theme === 'light' ? <Sun size={12} /> : theme === 'system' ? <Monitor size={12} /> : <Moon size={12} />
+  const themeHint =
+    theme === 'light' ? '外观：浅色（⌘⇧L 切换）'
+      : theme === 'system' ? '外观：跟随系统（⌘⇧L 切换）'
+        : '外观：深色（⌘⇧L 切换）'
+
   return (
     <aside
       className={cn(
-        'relative flex shrink-0 flex-col border-r border-white/[0.055] bg-base-850',
+        'relative flex shrink-0 flex-col border-r border-overlay/[0.055] bg-base-850',
         'transition-[width] duration-200 studio-ease'
       )}
       style={{ width: collapsed ? 56 : 224 }}
@@ -167,7 +184,7 @@ export function Sidebar({
                 const first = libraries[0]
                 if (first) selectLibrary(first.id)
               }}
-              className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-white/[0.06] hover:text-ink-100"
+              className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-overlay/[0.06] hover:text-ink-100"
             >
               <HardDrive size={14} />
             </button>
@@ -179,7 +196,7 @@ export function Sidebar({
             <DropdownTrigger asChild>
               <button
                 type="button"
-                className="no-drag flex h-8 w-full items-center gap-2 rounded-md border border-white/[0.06] bg-base-800/60 px-2 text-left transition-colors hover:border-white/[0.14] hover:bg-base-800"
+                className="no-drag flex h-8 w-full items-center gap-2 rounded-md border border-overlay/[0.06] bg-base-800/60 px-2 text-left transition-colors hover:border-overlay/[0.14] hover:bg-base-800"
               >
                 <HardDrive size={13} className="shrink-0 text-ink-500" />
                 <span className="flex-1 truncate text-[11.5px] text-ink-200">
@@ -301,8 +318,8 @@ export function Sidebar({
                       className={cn(
                         'no-drag group relative flex h-7 w-full items-center gap-2.5 rounded-md px-2 text-left transition-colors',
                         isActive(`tag:${t.id}`)
-                          ? 'bg-white/[0.06] text-ink-100'
-                          : 'text-ink-300 hover:bg-white/[0.035]'
+                          ? 'bg-overlay/[0.06] text-ink-100'
+                          : 'text-ink-300 hover:bg-overlay/[0.035]'
                       )}
                     >
                       {isActive(`tag:${t.id}`) ? (
@@ -319,14 +336,23 @@ export function Sidebar({
         )}
       </nav>
 
-      <div className={cn('border-t border-white/[0.055]', collapsed ? 'px-2 py-2' : 'px-3 py-2')}>
+      <div className={cn('border-t border-overlay/[0.055]', collapsed ? 'px-2 py-2' : 'px-3 py-2')}>
         {collapsed ? (
           <div className="flex flex-col items-center gap-1">
+            <Tooltip content={themeHint}>
+              <button
+                type="button"
+                onClick={cycleTheme}
+                className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-overlay/[0.06] hover:text-ink-100"
+              >
+                {theme === 'light' ? <Sun size={13} /> : theme === 'system' ? <Monitor size={13} /> : <Moon size={13} />}
+              </button>
+            </Tooltip>
             <Tooltip content="新建模型库">
               <button
                 type="button"
                 onClick={() => window.dispatchEvent(new CustomEvent('forma:new-library'))}
-                className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-white/[0.06] hover:text-ink-100"
+                className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-overlay/[0.06] hover:text-ink-100"
               >
                 <FolderPlus size={13} />
               </button>
@@ -335,7 +361,7 @@ export function Sidebar({
               <button
                 type="button"
                 onClick={() => void window.forma.revealUserData()}
-                className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-white/[0.06] hover:text-ink-100"
+                className="no-drag grid h-7 w-7 place-items-center rounded-md text-ink-400 hover:bg-overlay/[0.06] hover:text-ink-100"
               >
                 <Settings2 size={13} />
               </button>
@@ -347,6 +373,7 @@ export function Sidebar({
               {stats ? `${stats.count} 个模型 · ${formatSize(stats.bytes)}` : '—'}
             </span>
             <div className="flex shrink-0 items-center gap-0.5">
+              <IconButton size="sm" icon={themeIcon} label={themeHint} onClick={cycleTheme} />
               <IconButton
                 size="sm"
                 icon={<FolderPlus size={12} />}

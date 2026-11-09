@@ -5,7 +5,8 @@ const DEFAULTS: AppSettings = {
   defaultUnit: 'mm',
   externalApps: [],
   gridDensity: 'cozy',
-  background: 'dark'
+  background: 'dark',
+  theme: 'dark'
 }
 
 export function getSettings(): AppSettings {
@@ -16,6 +17,7 @@ export function getSettings(): AppSettings {
   const unit = (map.get('defaultUnit') ?? 'mm') as Unit
   const density = (map.get('gridDensity') ?? 'cozy') as AppSettings['gridDensity']
   const background = (map.get('background') ?? 'dark') as AppSettings['background']
+  const theme = (map.get('theme') ?? 'dark') as AppSettings['theme']
   let externalApps: AppSettings['externalApps'] = []
   try {
     const raw = map.get('externalApps')
@@ -35,7 +37,8 @@ export function getSettings(): AppSettings {
     defaultUnit: ['mm', 'cm', 'inch'].includes(unit) ? unit : DEFAULTS.defaultUnit,
     externalApps,
     gridDensity: ['compact', 'cozy', 'roomy'].includes(density) ? density : DEFAULTS.gridDensity,
-    background: ['dark', 'light', 'transparent'].includes(background) ? background : DEFAULTS.background
+    background: ['dark', 'light', 'transparent'].includes(background) ? background : DEFAULTS.background,
+    theme: ['dark', 'light', 'system'].includes(theme) ? theme : DEFAULTS.theme
   }
 }
 
@@ -47,6 +50,7 @@ export function setSettings(patch: Partial<AppSettings>): AppSettings {
   if (patch.defaultUnit !== undefined) write.run('defaultUnit', patch.defaultUnit)
   if (patch.gridDensity !== undefined) write.run('gridDensity', patch.gridDensity)
   if (patch.background !== undefined) write.run('background', patch.background)
+  if (patch.theme !== undefined) write.run('theme', patch.theme)
   if (patch.externalApps !== undefined) {
     write.run('externalApps', JSON.stringify(patch.externalApps))
   }

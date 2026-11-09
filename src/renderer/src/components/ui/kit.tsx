@@ -11,11 +11,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-base-700 text-ink-100 hover:bg-base-650 active:bg-base-600',
-        ghost: 'text-ink-300 hover:bg-white/[0.06] hover:text-ink-100',
+        ghost: 'text-ink-300 hover:bg-overlay/[0.06] hover:text-ink-100',
         outline:
-          'border border-white/[0.09] bg-transparent text-ink-200 hover:border-white/20 hover:bg-white/[0.04]',
+          'border border-overlay/[0.09] bg-transparent text-ink-200 hover:border-white/20 hover:bg-overlay/[0.04]',
         accent: 'bg-accent text-base-950 hover:bg-accent/90 active:bg-accent/80',
-        subtle: 'bg-white/[0.04] text-ink-300 hover:bg-white/[0.08] hover:text-ink-100',
+        subtle: 'bg-overlay/[0.04] text-ink-300 hover:bg-overlay/[0.08] hover:text-ink-100',
         danger: 'text-danger/90 hover:bg-danger/10 hover:text-danger'
       },
       size: {
@@ -56,9 +56,9 @@ export function IconButton({ icon, label, active, size = 'md', className, ...pro
         type="button"
         className={cn(
           'no-drag inline-flex items-center justify-center rounded-md text-ink-400 transition-colors',
-          'hover:bg-white/[0.07] hover:text-ink-100',
+          'hover:bg-overlay/[0.07] hover:text-ink-100',
           size === 'sm' ? 'h-6 w-6' : 'h-7 w-7',
-          active && 'bg-white/[0.07] text-accent',
+          active && 'bg-overlay/[0.07] text-accent',
           className
         )}
         {...props}
@@ -76,7 +76,7 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
     <input
       ref={ref}
       className={cn(
-        'h-7 w-full rounded-md border border-white/[0.07] bg-base-850 px-2.5 text-[12px] text-ink-100',
+        'h-7 w-full rounded-md border border-overlay/[0.07] bg-base-850 px-2.5 text-[12px] text-ink-100',
         'placeholder:text-ink-500 focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20',
         'transition-colors',
         className
@@ -92,7 +92,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTML
     <textarea
       ref={ref}
       className={cn(
-        'w-full resize-none rounded-md border border-white/[0.07] bg-base-850 px-2.5 py-2 text-[12px] leading-relaxed text-ink-200',
+        'w-full resize-none rounded-md border border-overlay/[0.07] bg-base-850 px-2.5 py-2 text-[12px] leading-relaxed text-ink-200',
         'placeholder:text-ink-500 focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20',
         className
       )}
@@ -150,7 +150,7 @@ export function Badge({
   tone?: 'neutral' | 'accent' | 'ok' | 'warn' | 'danger' | 'info'
 }): React.JSX.Element {
   const tones: Record<string, string> = {
-    neutral: 'bg-white/[0.06] text-ink-300',
+    neutral: 'bg-overlay/[0.06] text-ink-300',
     accent: 'bg-accent/12 text-accent',
     ok: 'bg-ok/12 text-ok',
     warn: 'bg-warn/12 text-warn',
@@ -279,5 +279,5 @@ export function Switch({
 // ---------------- Separator ----------------
 
 export function Separator({ className }: { className?: string }): React.JSX.Element {
-  return <div className={cn('h-px w-full bg-white/[0.06]', className)} />
+  return <div className={cn('h-px w-full bg-overlay/[0.06]', className)} />
 }

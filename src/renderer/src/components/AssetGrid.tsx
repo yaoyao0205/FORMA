@@ -326,7 +326,7 @@ function EmptyBlock({
 }): ReactElement {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-3 px-10 text-center">
-      <div className="grid h-14 w-14 place-items-center rounded-xl border border-white/[0.06] bg-white/[0.02] text-ink-600">
+      <div className="grid h-14 w-14 place-items-center rounded-xl border border-overlay/[0.06] bg-overlay/[0.02] text-ink-600">
         {icon}
       </div>
       <h2 className="text-[16px] font-semibold tracking-[-0.01em] text-ink-100">{title}</h2>
