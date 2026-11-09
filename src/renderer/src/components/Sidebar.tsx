@@ -1,5 +1,6 @@
 import type { ReactElement, ReactNode } from 'react'
 import { useMemo } from 'react'
+import { BrandMark } from './BrandMark'
 import {
   AlertTriangle,
   Boxes,
@@ -147,9 +148,7 @@ export function Sidebar({
         {collapsed ? null : (
           <>
             <div className="flex min-w-0 flex-1 items-center gap-2">
-              <div className="grid h-[20px] w-[20px] place-items-center rounded-[5px] bg-accent text-[10px] font-bold text-base-950">
-                F
-              </div>
+              <BrandMark size={20} />
               <span className="truncate text-xs font-semibold tracking-[0.18em] text-ink-100">FORMA</span>
             </div>
             <IconButton
