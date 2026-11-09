@@ -115,6 +115,40 @@ npx electron out/main/index.js
 
 `FORMA_SHOT_SCRIPT` 会在截图前注入，用来切到指定 UI 状态；注入后主进程会 `show/focus/invalidate` 再 `capturePage`，否则可能截到旧合成帧。
 
+## 应用图标
+
+图形取自应用内「无缩略图」时的等轴立方体占位符，做成 1980 年代技术插画徽章：双线金环 + 12 处刻位、粗黑轮廓的平板色块（丝网印刷）、半调网点、套色微偏移。复古感来自这四件可观察的工艺特征，而不是加一层滤镜。
+
+| 角色 | 值 | 位置 |
+| --- | --- | --- |
+| 石墨底 | `#141619` | 满版，与 App 背景同值 |
+| 冷蓝紫 | `#C7D2FF` | 立方体顶面、网点，与 3D 预览主材质同值 |
+| 靛蓝 | `#5A6BD8` | 立方体侧面 |
+| 墨蓝 | `#333C66` | 立方体暗面 |
+| 暖金 | `#E6C079` | 双线环与刻位，面积最小 |
+
+接入路径跟 `buildResources` 走 —— 图标放 `resources/`，不是 `build/`：
+
+```
+resources/icon.icns   3344086 B，11 个尺寸块（16–1024 及 @2x）
+resources/icon.ico    189018 B，16/24/32/48/64/128/256
+resources/icon.png    512×512，仅服务未打包运行时的窗口 / Dock 图标
+```
+
+`electron-builder.yml` 里 `mac.icon: icon.icns`、`win.icon: icon.ico` 显式声明（路径相对 `buildResources`）；主进程 `devIcon()` 只在 `app.isPackaged` 为假时把 `resources/icon.png` 交给 `BrowserWindow({ icon })` 与 `app.dock.setIcon`，打包后由 app bundle 接管。
+
+**验证（macOS 实机）**
+
+| 项 | 结果 |
+| --- | --- |
+| `iconutil -c iconset` 反向解析 icns | 成功，解出 11 个 png（含 48×48） |
+| 打包产物 `Contents/Resources/icon.icns` md5 | `fc6e66c77b89a049c1f74474085a09f1`，与源文件一致 |
+| `Info.plist` `CFBundleIconFile` | `icon.icns` |
+| `typecheck` / `build` / `npm test` | 通过 / 通过 / 23 条全过 |
+| 开发态启动截图 | 正常出图，无图标相关报错 |
+
+**后处理**（生成图不是满版，必须修三步）：按亮度阈值找到图标真实边界并裁切 → 缩到 1024 并套 macOS 标准圆角（22.37%）→ 最外 12px 向石墨色渐变压掉原图自带的亮描边。跳过第三步，128px 下会出现肉眼可见的白框。
+
 ## 已知限制
 
 - 多标签筛选为 **AND（交集）** 语义，筛选条用 `∩` 明示；暂未提供 OR 模式

@@ -22,6 +22,10 @@
 
 ![浅色网格](docs/shots/graphite-07-light-grid.png)
 
+应用图标（石墨丝网复古：等轴立方体 + 双线金环刻位 + 半调网点，配色与应用主体同源）：
+
+![应用图标](docs/shots/09-app-icon.png)
+
 ## 技术栈
 
 Electron · React · TypeScript（严格模式）· Vite · Tailwind CSS · SQLite（better-sqlite3）· Three.js / React Three Fiber · Zustand

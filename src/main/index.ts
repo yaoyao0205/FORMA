@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, net, protocol, shell } from 'electron'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { existsSync } from 'node:fs'
 import { writeFile } from 'node:fs/promises'
 import { initDatabase, closeDatabase } from './services/database'
 import { registerIpc } from './ipc'
@@ -101,6 +102,13 @@ function buildMenu(): void {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
 
+// 开发态图标：打包后由 app bundle 里的 icon.icns / icon.ico 接管，
+// 这里只服务未打包直接跑 out/main 的场景（Windows 窗口图标、macOS Dock）。
+function devIcon(): string | undefined {
+  const p = join(__dirname, '../../resources/icon.png')
+  return existsSync(p) ? p : undefined
+}
+
 function createWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1560,
@@ -109,6 +117,7 @@ function createWindow(): void {
     minHeight: 720,
     show: false,
     backgroundColor: '#141619',
+    icon: devIcon(),
     titleBarStyle: 'hiddenInset',
     trafficLightPosition: { x: 16, y: 20 },
     webPreferences: {
@@ -254,6 +263,11 @@ app.whenReady().then(async () => {
   initDatabase(app.getPath('userData'))
   registerIpc(() => mainWindow, importService)
   buildMenu()
+  // macOS 未打包运行时 Dock 会显示 Electron 默认图标，这里换成应用图标
+  if (isDev && process.platform === 'darwin') {
+    const icon = devIcon()
+    if (icon) app.dock?.setIcon(icon)
+  }
   await seedIfRequested()
   // 建库（含 seed）之后再启动文件夹监控，确保启动期已存在的库都被覆盖
   initWatcher(importService)
