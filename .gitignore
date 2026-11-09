@@ -1,0 +1,28 @@
+# 依赖
+node_modules/
+
+# 构建产物
+out/
+dist/
+release/
+build/
+*.tsbuildinfo
+
+# 测试编译中间物
+test/.build/
+
+# 环境与本地配置
+.env
+.env.*
+!.env.example
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# 日志与临时文件
+*.log
+npm-debug.log*
